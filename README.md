@@ -1,6 +1,6 @@
 ![alt text](https://github.com/Aman-Anas/Galactiwave---Last-Flight/blob/master/Media/GWaveTransparent.png "Galactiwave")
 
-##Galactiwave - Last Flight
+## Galactiwave - Last Flight
 
 Welcome to the Github repo of Galactiwave, an open-source game made with the powerful (and also open-source) engine, UPBGE. Visit the [releases page](../releases "Galactiwave Releases") to download the latest stable version of the game.
 
