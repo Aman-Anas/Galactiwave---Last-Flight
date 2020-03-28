@@ -1,4 +1,4 @@
-![alt text](../tree/master/Media/GWaveTransparent.png "Galactiwave")
+![alt text](../raw/master/Media/GWaveTransparent.png "Galactiwave")
 
 Galactiwave - Last Flight
 ======
