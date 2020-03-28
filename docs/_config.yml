@@ -23,7 +23,7 @@ post_limit: 5
 
 title : Helium Jekyll
 tagline: Bootstrap 4 UI kit for jekyll
-author : 
+author :
   name : Aman Anas
   site: amancoolblog.com/portfolio/
   description : Making a game in my free time
@@ -97,12 +97,12 @@ JB :
   #
   comments :
     provider : disqus
-    disqus : 
+    disqus :
       short_name : jeky-new-age
     #livefyre :
-    #  site_id : 
+    #  site_id :
     #intensedebate :
-    #  account : 
+    #  account :
     #facebook :
     #  appid :
       num_posts: 5
