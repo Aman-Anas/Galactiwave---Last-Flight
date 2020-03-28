@@ -1,4 +1,4 @@
-![alt text](../raw/master/Media/GWaveTransparent.png "Galactiwave")
+![alt text](https://github.com/Aman-Anas/Galactiwave---Last-Flight/blob/master/Media/GWaveTransparent.png "Galactiwave")
 
 Galactiwave - Last Flight
 ======
