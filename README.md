@@ -11,4 +11,4 @@ Simply unzip the game's folder to wherever you choose, and run `GWLauncher.exe` 
 Join the [Discord server](https://discord.gg/ynettQS) or submit an issue on the [Github page](https://github.com/Aman-Anas/Galactiwave---Last-Flight/issues).
 
 ## Contribute
-To contribute to the project, you'll need to use UPBGE version 0.2.4 and pull (or download) the repository. For information and documentation, visit the [Discord server](https://discord.gg/ynettQS).
+To contribute to the project, you'll need to use UPBGE version 0.2.5a and pull (or download) the repository. For information and documentation, visit the [Discord server](https://discord.gg/ynettQS).
