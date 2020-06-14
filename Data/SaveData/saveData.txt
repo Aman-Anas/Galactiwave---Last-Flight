@@ -1,1 +1,1 @@
-{"Money": 234.0, "Name": "Bob", "EnemiesAlive": 3, "CurrentShip": "SedariiInterceptor"}
+{"Money": 234.0, "Name": "Telos", "EnemiesAlive": 3, "CurrentShip": "NovaBoat", "CurrentLander": "NovaSail"}
