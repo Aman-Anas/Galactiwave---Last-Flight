@@ -4,16 +4,16 @@ cont = bge.logic.getCurrentController()
 own = cont.owner
 
 
-path = bge.logic.expandPath(r"//..\SaveData\saveData.txt")
+path = bge.logic.expandPath(r"//Saves\CurrentSave.txt")
 
-with open(path, 'r+') as fh:
-    
-    data = json.load(fh)
-    own["Money"] = data["Money"]
-    own["Name"] = data["Name"]
-    own["EnemiesAlive"] = data["EnemiesAlive"]
-    own["CurrentShip"] = data["CurrentShip"]
-    own["CurrentLander"] = data["CurrentLander"]
-    
-        
+with open(path, 'r+') as openFile:
+    data = json.load(openFile)
+    own["CurrentSave"] = data["CurrentSave"]
 
+own["saveFile"] = "save"+(own["CurrentSave"])+".txt"
+
+pathTwo = bge.logic.expandPath("//Saves\\"+(own["saveFile"]))
+
+with open(pathTwo, 'r+') as openData:
+    data = json.load(openData)
+    own["TimeOfDay"] = data["TimeOfDay"]
