@@ -22,8 +22,16 @@ if hitNormal: # check before if the ray hit something
     v1 = axisZ
     v2 = hitNormal
     rotDif = Vector(v1.rotation_difference(v2).to_euler())
+    own["distToAlign"] = rotDif[0] + rotDif[1] + rotDif[2]
+    if (abs(own["distToAlign"]) > 0.06):
+        own["aligning"] = True
+    else:
+        own["aligning"] = False
+    #print(own["aligning"])
+    #print(sen.hitPosition)
+    
     rot = own.worldAngularVelocity
     rot += rotDif *3 #"elasticity"
-    rot *= 0.5 # inertia
+    rot *= 0.8 # inertia
     #print("wow")
     own.applyForce(-hitNormal*9.8)#gravity to the normal
