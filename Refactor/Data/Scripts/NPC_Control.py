@@ -5,26 +5,34 @@ def updateVal (cont):
     d = cont.sensors["D"]
     a = cont.sensors["A"]
     
+    if (own["player_mode"] == "ACTIVE"):
+        own["autoBump"] = True
+    else:
+        own["autoBump"] = False
+    
     #self-correct position to stay out of the way of things
-    if w.positive:
-        cont.activate(cont.actuators["Forward"])
-    else:
-        cont.deactivate(cont.actuators["Forward"])
-        
-    if s.positive:
-        cont.activate(cont.actuators["Back"])
-    else:
-        cont.deactivate(cont.actuators["Back"])
-        
-    if d.positive:
-        cont.activate(cont.actuators["Right"])
-    else:
-        cont.deactivate(cont.actuators["Right"])
-        
-    if a.positive:
-        cont.activate(cont.actuators["Left"])
-    else:
-        cont.deactivate(cont.actuators["Left"])
+    if (own["moveActive"] == True): 
+        #Only enable auto-correction if this is true, controlled by state
+        if (own["autoBump"] == True):
+            if w.positive:
+                cont.activate(cont.actuators["Forward"])
+            else:
+                cont.deactivate(cont.actuators["Forward"])
+                
+            if s.positive:
+                cont.activate(cont.actuators["Back"])
+            else:
+                cont.deactivate(cont.actuators["Back"])
+                
+            if d.positive:
+                cont.activate(cont.actuators["Right"])
+            else:
+                cont.deactivate(cont.actuators["Right"])
+                
+            if a.positive:
+                cont.activate(cont.actuators["Left"])
+            else:
+                cont.deactivate(cont.actuators["Left"])
         
     jumpTime = 0.2
     jumpForce = 0.7

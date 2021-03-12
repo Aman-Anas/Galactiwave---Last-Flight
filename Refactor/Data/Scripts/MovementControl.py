@@ -1,9 +1,39 @@
+import bpy
 def updateVal (cont):
     own = cont.owner
     w = cont.sensors["W"]
     s = cont.sensors["S"]
     d = cont.sensors["D"]
     a = cont.sensors["A"]
+    
+    terminalCol = cont.sensors["terminalCol"]
+    e = cont.sensors["E"]
+    camAct = cont.actuators["SetCam"]
+    
+    if (e.positive):
+        if (own["player_mode"] == "ACTIVE"):
+            if (terminalCol.positive):    
+                terminal = terminalCol.hitObject
+                own["player_mode"] = "TERMINAL"
+                camAct.camera["active"] = False
+                #The order goes camera is parented to the axis thing is parented to the aligner
+                #so it accesses the children in reverse order
+                camAct.camera = terminal.children[0].children[0].children[0]
+                camAct.camera.parent["active"] = True
+                    
+        elif (own["player_mode"] == "TERMINAL"):
+            own["player_mode"] = "ACTIVE"
+            #This child is the camera which has the terminal as its parent
+            #setting active to false so that it doesn't move around when player is not on it
+            camAct.camera.parent["active"] = False
+            camAct.camera = "PlayerCam"
+            camAct.camera["active"] = True
+                
+    
+                
+            
+            
+            
     
     jumpTime = 0.2
     jumpForce = 0.7
@@ -16,7 +46,7 @@ def updateVal (cont):
         own["wasdPressed"] = False
     
     space = cont.sensors["Space"]
-    if (space.positive and own["jumpTimer"] > 0):
+    if (space.positive and own["jumpTimer"] > 0) and (own["moveActive"] == True):
         
         own["jumpTimer"] -= jumpIncrement
         own.localLinearVelocity.z +=jumpForce

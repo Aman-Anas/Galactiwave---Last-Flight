@@ -3,6 +3,7 @@ def updateState (cont):
     own = cont.owner
     scene = own.scene
     floor = cont.sensors["floorRay"]
+    
     normalVect = own.getVectTo(floor.hitPosition)
     own["distanceToFloor"] = normalVect[0]
     
@@ -11,19 +12,22 @@ def updateState (cont):
     else:
         own["onFloor"] = False
     
-    
-    if own["onFloor"] == False:
-        if own["jumping"] == True:
-                own["player_state"] = "JUMPING"
-        else:
-            own["player_state"] = "FALLING"
-    else:
-        if own["moveActive"] == True:
+    if (own["player_mode"] == "ACTIVE"):
+        own["moveActive"] = True
+        if own["onFloor"] == False:
+            if own["jumping"] == True:
+                    own["player_state"] = "JUMPING"
+            else:
+                own["player_state"] = "FALLING"
+        else:     
             if own["wasdPressed"] == True:
                 own["player_state"] = "MOVING"
             else:
                 own["player_state"] = "STATIONARY"
-        else:
-            own["player_state"] = "FROZEN"
+              
+    
+    if own["player_mode"] == "TERMINAL":
+        own["player_state"] = "FROZEN"
+        own["moveActive"] = False
                 
     
