@@ -18,7 +18,9 @@ def updateVal (cont):
                 camAct.camera["active"] = False
                 #The order goes camera is parented to the axis thing is parented to the aligner
                 #so it accesses the children in reverse order
-                camAct.camera = terminal.children[0].children[0].children[0]
+                if (terminal["terminal_gui"] == "weapons"):
+                    camAct.camera = terminal.children[0].children[0].children[0]
+                
                 camAct.camera.parent["active"] = True
                     
         elif (own["player_mode"] == "TERMINAL"):
