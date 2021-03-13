@@ -7,6 +7,14 @@ def updateAim(cont):
     cam = own.children[0]
     maxY = own["maxY"]
     minY = own["minY"]
+    
+    npc = cont.sensors["NPC"]
+    
+    if ((npc.positive) and (npc.hitObject["NPC"] == "alive")):
+        own["AI_enabled"] = True
+    else:
+        own["AI_enabled"] = True
+    
     if (own["active"] == False):
         if (own["AI_enabled"] == True):
             #print(own)
@@ -63,10 +71,11 @@ def updateAim(cont):
             #cont.deactivate(cont.actuators["TrackX"])
     else:
         if (own["angleReset"] == False):
-            curOrient = cam.localOrientation.to_euler()
-            curOrient.x = own["savedAngle"].x + radians(90)
-            cam.localOrientation = curOrient
-            own["angleReset"] = True
+            if ("savedAngle" in own):
+                curOrient = cam.localOrientation.to_euler()
+                curOrient.x = own["savedAngle"].x + radians(90)
+                cam.localOrientation = curOrient
+                own["angleReset"] = True
         cont.deactivate(cont.actuators["TrackY"])
         #cont.deactivate(cont.actuators["TrackX"])
         deg = degrees(cam.localOrientation.to_euler()[0]) - 90

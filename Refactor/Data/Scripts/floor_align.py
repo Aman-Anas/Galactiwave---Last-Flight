@@ -29,6 +29,10 @@ if hitNormal: # check before if the ray hit something
         own["aligning"] = False
     #print(own["aligning"])
     #print(sen.hitPosition)
+   # currentRot = own.localOrientation.to_euler()
+   # currentRot.x = 0
+    #currentRot.y = 0
+    #own.localOrientation = currentRot
     
     rot = own.worldAngularVelocity
     rot += rotDif *3 #"elasticity"

@@ -35,7 +35,7 @@ def updateVal (cont):
                 if "terminal" in obj:
                     vec = own.getVectTo(obj)
                     own.alignAxisToVect((vec[1]), 1, 1.0)
-                    own.applyForce((0,10*vec[0],0),True)
+                    own.applyForce((0,20*vec[0],0),True)
     else:            
         own["autoBump"] = False
         
