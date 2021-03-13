@@ -13,7 +13,7 @@ def updateAim(cont):
     if ((npc.positive) and (npc.hitObject["NPC"] == "alive")):
         own["AI_enabled"] = True
     else:
-        own["AI_enabled"] = True
+        own["AI_enabled"] = False
     
     if (own["active"] == False):
         if (own["AI_enabled"] == True):
