@@ -8,6 +8,7 @@ def updateVal (cont):
     t = cont.sensors["T"]
     f = cont.sensors["F"]
     player = cont.sensors["playerCol"]
+    hitTerminal = cont.sensors["hitTerminal"]
     
     if (player.positive) and (t.positive):
         if own["player_mode"] == "ACTIVE":
@@ -25,17 +26,20 @@ def updateVal (cont):
     if (own["player_mode"] == "ACTIVE"):
         own["autoBump"] = True
         if own["follow"] == True:
-            for obj in own.scene.objects:
-                if "onlyPlayer" in obj:
-                    vec = own.getVectTo(obj)
-                    own.alignAxisToVect((vec[1]), 1, 1.0)
-                    own.applyForce((0,20*vec[0],0),True)
+            if ((player.positive) == False):
+                
+                for obj in own.scene.objects:
+                    if "onlyPlayer" in obj:
+                        vec = own.getVectTo(obj)
+                        own.alignAxisToVect((vec[1]), 1, 0.2)
+                        own.applyForce((0,20*vec[0],0),True)
     elif (own["player_mode"] == "FINDTERMINAL"):
-        for obj in own.scene.objects:
-                if "terminal" in obj:
-                    vec = own.getVectTo(obj)
-                    own.alignAxisToVect((vec[1]), 1, 1.0)
-                    own.applyForce((0,20*vec[0],0),True)
+        if ((hitTerminal.positive) == False):
+            for obj in own.scene.objects:
+                    if "terminal" in obj:
+                        vec = own.getVectTo(obj)
+                        own.alignAxisToVect((vec[1]), 1, 0.2)
+                        own.applyForce((0,20*vec[0],0),True)
     else:            
         own["autoBump"] = False
         
