@@ -1,14 +1,46 @@
+from mathutils import Vector
 def updateVal (cont):
     own = cont.owner
     w = cont.sensors["W"]
     s = cont.sensors["S"]
     d = cont.sensors["D"]
     a = cont.sensors["A"]
+    t = cont.sensors["T"]
+    f = cont.sensors["F"]
+    player = cont.sensors["playerCol"]
     
+    if (player.positive) and (t.positive):
+        if own["player_mode"] == "ACTIVE":
+            own["player_mode"] = "FINDTERMINAL"
+        elif own["player_mode"] == "FINDTERMINAL":
+            own["player_mode"] = "ACTIVE"
+    
+    if (player.positive) and (f.positive):
+        if own["player_mode"] == "ACTIVE":
+            if own["follow"] == False:
+                own["follow"] = True
+            else:
+                own["follow"] = False
+            
     if (own["player_mode"] == "ACTIVE"):
         own["autoBump"] = True
-    else:
+        if own["follow"] == True:
+            for obj in own.scene.objects:
+                if "onlyPlayer" in obj:
+                    vec = own.getVectTo(obj)
+                    own.alignAxisToVect((vec[1]), 1, 1.0)
+                    own.applyForce((0,20*vec[0],0),True)
+    elif (own["player_mode"] == "FINDTERMINAL"):
+        for obj in own.scene.objects:
+                if "terminal" in obj:
+                    vec = own.getVectTo(obj)
+                    own.alignAxisToVect((vec[1]), 1, 1.0)
+                    own.applyForce((0,10*vec[0],0),True)
+    else:            
         own["autoBump"] = False
+        
+    
+   
     
     #self-correct position to stay out of the way of things
     if (own["moveActive"] == True): 
