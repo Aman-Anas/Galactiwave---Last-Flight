@@ -1,4 +1,4 @@
-import bpy
+#import bpy
 def updateVal (cont):
     own = cont.owner
     w = cont.sensors["W"]
