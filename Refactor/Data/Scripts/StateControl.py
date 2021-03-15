@@ -20,7 +20,7 @@ def updateState (cont):
                     own["player_state"] = "JUMPING"
             else:
                 own["player_state"] = "FALLING"
-        else:     
+        else:
             if own["wasdPressed"] == True:
                 own["player_state"] = "MOVING"
             else:
@@ -28,7 +28,7 @@ def updateState (cont):
     
     if ("follow" in own):
         if ((own["follow"] == True) or (own["player_mode"] == "FINDTERMINAL")):
-            if (own.localLinearVelocity.y > 0.1):
+            if (own["distTo"] > 1):
                 own["player_state"] = "MOVING"
             else:
                 own["player_state"] = "STATIONARY"
