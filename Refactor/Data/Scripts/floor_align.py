@@ -38,4 +38,6 @@ if hitNormal: # check before if the ray hit something
     rot += rotDif *3 #"elasticity"
     rot *= 0.8 # inertia
     #print("wow")
-    own.applyForce(-hitNormal*9.8)#gravity to the normal
+    if (own["player_mode"] != "TERMINAL"):
+        own.applyForce(-hitNormal*9.8)#gravity to the normal
+   

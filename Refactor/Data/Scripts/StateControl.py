@@ -12,6 +12,7 @@ def updateState (cont):
     else:
         own["onFloor"] = False
     
+    
     if (own["player_mode"] == "ACTIVE"):
         own["moveActive"] = True
         if own["onFloor"] == False:
@@ -24,10 +25,19 @@ def updateState (cont):
                 own["player_state"] = "MOVING"
             else:
                 own["player_state"] = "STATIONARY"
-              
+    
+    if ("follow" in own):
+        if ((own["follow"] == True) or (own["player_mode"] == "FINDTERMINAL")):
+            if (own.localLinearVelocity.y > 0.1):
+                own["player_state"] = "MOVING"
+            else:
+                own["player_state"] = "STATIONARY"
     
     if own["player_mode"] == "TERMINAL":
         own["player_state"] = "FROZEN"
         own["moveActive"] = False
-                
+    
+   # if (own["player_state"] == "FROZEN") and (floor.positive):
+       # own.worldLinearVelocity = floor.hitObject.worldLinearVelocity
+       # own.worldOrientation = floor.hitObject.worldOrientation
     

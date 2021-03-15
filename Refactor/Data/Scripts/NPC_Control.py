@@ -7,8 +7,19 @@ def updateVal (cont):
     a = cont.sensors["A"]
     t = cont.sensors["T"]
     f = cont.sensors["F"]
+    
+    
+    
+    
+    
+    
     player = cont.sensors["playerCol"]
     hitTerminal = cont.sensors["hitTerminal"]
+    
+    
+    
+    
+    
     
     if (player.positive) and (t.positive):
         if own["player_mode"] == "ACTIVE":
@@ -32,14 +43,25 @@ def updateVal (cont):
                     if "onlyPlayer" in obj:
                         vec = own.getVectTo(obj)
                         own.alignAxisToVect((vec[1]), 1, 0.2)
-                        own.applyForce((0,20*vec[0],0),True)
+                        own.applyMovement((0,0.01*vec[0],0),True)
     elif (own["player_mode"] == "FINDTERMINAL"):
+        own["autoBump"] = False
+        closest = 999999
+        closeObj = own
         if ((hitTerminal.positive) == False):
+            
             for obj in own.scene.objects:
-                    if "terminal" in obj:
+                    if "terminalTar" in obj:
                         vec = own.getVectTo(obj)
-                        own.alignAxisToVect((vec[1]), 1, 0.2)
-                        own.applyForce((0,20*vec[0],0),True)
+                        #print(vec[0])
+                        if (vec[0] < closest):
+                            closest = vec[0]
+                            closeObj = obj
+            if (closeObj != own):
+                #own.alignAxisToVect((own.getVectTo(closeObj)[1]), 1, 0.5)
+                own.worldPosition = closeObj.worldPosition
+                own.worldOrientation = closeObj.worldOrientation
+                #own.applyMovement((0,0.02*own.getVectTo(closeObj)[0],0),True)           
     else:            
         own["autoBump"] = False
         
@@ -51,25 +73,17 @@ def updateVal (cont):
         #Only enable auto-correction if this is true, controlled by state
         if (own["autoBump"] == True):
             if w.positive:
-                cont.activate(cont.actuators["Forward"])
-            else:
-                cont.deactivate(cont.actuators["Forward"])
+                own.applyMovement((0,own["maxSpeed"],0),True)
                 
             if s.positive:
-                cont.activate(cont.actuators["Back"])
-            else:
-                cont.deactivate(cont.actuators["Back"])
-                
+                own.applyMovement((0,-own["maxSpeed"],0),True)
+              
             if d.positive:
-                cont.activate(cont.actuators["Right"])
-            else:
-                cont.deactivate(cont.actuators["Right"])
-                
+                own.applyMovement((own["maxSpeed"],0,0),True)
+            
             if a.positive:
-                cont.activate(cont.actuators["Left"])
-            else:
-                cont.deactivate(cont.actuators["Left"])
-        
+                own.applyMovement((-own["maxSpeed"],0,0),True)
+            
     jumpTime = 0.2
     jumpForce = 0.7
     jumpIncrement = 0.1
@@ -116,5 +130,25 @@ def updateVal (cont):
     #    own.localLinearVelocity.z = 0
     #print(own["timeTillStop"])
     #print("jumpTimer"+str(own["jumpTimer"]))
-    own.localLinearVelocity.x = 0
-    own.localLinearVelocity.y = 0
+    floor = cont.sensors["floorRay"]
+    touchFloor = cont.sensors["touchFloor"]
+    if (space.positive == False) and (touchFloor.positive):
+        if (own["onFloor"] == True):
+            own.worldLinearVelocity = floor.hitObject.worldLinearVelocity
+            #ownOrient = own.worldOrientation - floor.hitObject.worldOrientation
+            #ownPosDif = own.worldPosition - floor.hitObject.worldPosition
+            #ownOrient -= floor.hitObject.worldOrientation .to_euler()
+           # ownOrient.y += floor.hitObject.worldAngularVelocity.y
+           # ownOrient.z += floor.hitObject.worldAngularVelocity.z
+            #if (own.localLinearVelocity.z < 0.1):
+                #rotDif = Vector(v1.rotation_difference(v2).to_euler())
+           #     own.worldOrientation = floor.hitObject.worldOrientation + ownOrient
+           # if (abs(own.localLinearVelocity.y < 0.1)):
+           #     own.worldPosition = floor.hitObject.worldPosition + ownPosDif
+    if floor.positive == False and own["player_mode"] == "FINDTERMINAL":
+        own["player_mode"] = "ACTIVE"    #print(
+            
+    #if touchFloor.positive:
+        #own.worldLinearVelocity = touchFloor.hitObject.worldLinearVelocity 
+    #own.localLinearVelocity.x = 0
+    #own.localLinearVelocity.y = 0

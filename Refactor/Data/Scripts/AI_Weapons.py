@@ -10,7 +10,7 @@ def updateAim(cont):
     
     npc = cont.sensors["NPC"]
     
-    if ((npc.positive) and (npc.hitObject["NPC"] == "alive")):
+    if (((npc.positive) and (npc.hitObject["NPC"] == "alive")) and (npc.hitObject["player_mode"] == "FINDTERMINAL")):
         own["AI_enabled"] = True
     else:
         own["AI_enabled"] = False
@@ -29,7 +29,7 @@ def updateAim(cont):
             camOrient = cam.localOrientation.to_euler()
             camOrient.x = radians(90)
             camOrient.y = 0
-            camOrient.z = 0
+            camOrient.z = 0 - own.parent.localOrientation.to_euler().z 
             cam.localOrientation = camOrient
             own["target_track"] = "none"
             for obj in own.scene.objects:
@@ -38,12 +38,12 @@ def updateAim(cont):
                         #cont.actuators["TrackX"].object = obj
                         cont.actuators["TrackY"].object = obj
                         own["target_track"] = obj
-                        
+                        #print(own["target_track"])
             
             
             if ((deg >= minY) and (deg <= maxY)):
                 if (own["target_track"] != "none"):
-                    own.alignAxisToVect((own.getVectTo(own["target_track"])[1]),1,1.0)
+                    own.alignAxisToVect((own.getVectTo(own["target_track"])[1]),1,0.1)
               #  cont.activate(cont.actuators["TrackY"])
                 #cont.deactivate(cont.actuators["TrackY"])
                 currentRot = own.localOrientation.to_euler()
@@ -55,12 +55,18 @@ def updateAim(cont):
                 
             if (deg < minY):
              #   cont.deactivate(cont.actuators["TrackY"])
-                own.applyRotation((radians(minY - deg),0,0),True)
+                curRot = own.localOrientation.to_euler()
+                curRot.x = radians(minY) + radians(0.01)
+                own.localOrientation = curRot
+                #own.applyRotation((radians(minY - deg),0,0),True)
                 #print(minY - deg)
                 
             if (deg > maxY):
            #     cont.deactivate(cont.actuators["TrackY"])
-                own.applyRotation((radians(maxY - deg),0,0),True)
+                curRot = own.localOrientation.to_euler()
+                curRot.x = radians(maxY) - radians(0.01)
+                own.localOrientation = curRot
+                #own.applyRotation((radians(maxY - deg),0,0),True)
                 #print(maxY - deg)
             own["angleReset"] = False
             own["savedAngle"] = own.localOrientation.to_euler()
