@@ -53,13 +53,14 @@ def updateVal (cont):
                     
                 own["distTo"] = vec[0]
         terminal = closeObj.parent
-        
-        for object in terminal.children:
-            if "align" in object:
-                #print(terminal.children)
-                
-                object.children[0]["AI_enabled"] = False
-                own["lastTerminal"] = object
+        if terminal != None:
+            #own.worldAngularVelocity = terminal.worldAngularVelocity    
+            for object in terminal.children:
+                if "align" in object:
+                    #print(terminal.children)
+                    
+                    object.children[0]["AI_enabled"] = False
+                    own["lastTerminal"] = object
         
         for obj in own.scene.objects:
             if "onlyPlayer" in obj:
@@ -125,7 +126,7 @@ def updateVal (cont):
         
     
    
-    
+    space = cont.sensors["Space"]
     #self-correct position to stay out of the way of things
     if (own["moveActive"] == True): 
         #Only enable auto-correction if this is true, controlled by state
@@ -141,6 +142,9 @@ def updateVal (cont):
             
             if a.positive:
                 own.applyMovement((-own["maxSpeed"],0,0),True)
+                
+            #if space.positive:
+                
             
     jumpTime = 0.2
     jumpForce = 0.7
@@ -152,12 +156,13 @@ def updateVal (cont):
     else:
         own["wasdPressed"] = False
     
-    space = cont.sensors["Space"]
+    
     if (space.positive and own["jumpTimer"] > 0):
         
         own["jumpTimer"] -= jumpIncrement
-        own.localLinearVelocity.z +=jumpForce
-    
+        #own.localLinearVelocity.z +=jumpForce
+        own.applyMovement((0,0,own["maxSpeed"]),True)
+        
     if (space.positive == False and own.localLinearVelocity.z > 0):
         own["jumpTimer"] = 0
         own.localLinearVelocity.z = 0 
@@ -189,10 +194,12 @@ def updateVal (cont):
     #print(own["timeTillStop"])
     #print("jumpTimer"+str(own["jumpTimer"]))
     
-    if (space.positive == False) and (touchFloor.positive):
-        if (own["onFloor"] == True):
+    if (touchFloor.positive):
+        if (floor.positive) and own["follow"] == False:
             own.worldLinearVelocity = floor.hitObject.worldLinearVelocity
-            
+            if (own["player_mode"] != "FINDTERMINAL"):
+                own.worldOrientation = floor.hitObject.worldOrientation
+                
             #ownOrient = own.worldOrientation - floor.hitObject.worldOrientation
             #ownPosDif = own.worldPosition - floor.hitObject.worldPosition
             #ownOrient -= floor.hitObject.worldOrientation .to_euler()
@@ -206,7 +213,7 @@ def updateVal (cont):
     if floor.positive == False and own["player_mode"] == "FINDTERMINAL":
         own["player_mode"] = "ACTIVE"    #print(
     
-    if floor.positive == False and own["follow"] == True:
+    if (own["distanceToFloor"] > 3) and own["follow"] == True:
         own["follow"] = False
     #if touchFloor.positive:
         #own.worldLinearVelocity = touchFloor.hitObject.worldLinearVelocity 

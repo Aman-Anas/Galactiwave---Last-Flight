@@ -64,6 +64,7 @@ def updateVal (cont):
                 own["currentTerminal"] = terminalCol.hitObject
                 own["player_mode"] = "TERMINAL"
                 camAct.camera["active"] = False
+                own.suspendDynamics(True)
                 #The order goes camera is parented to the axis thing is parented to the aligner
                 #so it accesses the children in reverse order
                 
@@ -84,7 +85,7 @@ def updateVal (cont):
                 
                     
         elif (own["player_mode"] == "TERMINAL"):
-            
+            own.restoreDynamics()
             #This child is the camera which has the terminal as its parent
             #setting active to false so that it doesn't move around when player is not on it
             if (own["currentTerminal"]["terminal_gui"] == "weapons"):
@@ -165,6 +166,7 @@ def updateVal (cont):
                 #own.worldOrientation = floor.hitObject.worldOrientation
                 #hit = cont.sensors["MagRay"]
                 dist = own.getVectTo(own["currentTerminal"])
+                
                 for obj in own["currentTerminal"].children:
                     if "terminalTar" in obj:
                         own.worldOrientation = obj.worldOrientation

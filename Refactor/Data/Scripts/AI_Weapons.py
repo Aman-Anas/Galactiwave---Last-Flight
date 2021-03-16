@@ -16,6 +16,8 @@ def updateAim(cont):
      #   own["AI_enabled"] = False
     
     if (own["active"] == False):
+        cont.deactivate(cont.actuators["X"])
+        cont.deactivate(cont.actuators["Y"])
         if (own["AI_enabled"] == True):
             #print(own)
             cont.deactivate(cont.actuators["X"])
@@ -43,7 +45,7 @@ def updateAim(cont):
             
             if ((deg >= minY) and (deg <= maxY)):
                 if (own["target_track"] != "none"):
-                    own.alignAxisToVect((own.getVectTo(own["target_track"])[1]),1,0.1)
+                    own.alignAxisToVect((own.getVectTo(own["target_track"])[1]),1,0.14)
               #  cont.activate(cont.actuators["TrackY"])
                 #cont.deactivate(cont.actuators["TrackY"])
                 currentRot = own.localOrientation.to_euler()
