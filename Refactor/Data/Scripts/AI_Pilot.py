@@ -13,9 +13,9 @@ def updateLook(cont):
     
     pilotCam = own.children[0].children[0]
     dist = own.getVectTo(pilotCam)[0]
-    if (dist < own["camDistance"]):
+    if (dist < ship["camZoom"]):
         pilotCam.applyMovement((0,0,0.05),True)
-    elif (dist > own["camDistance"]):
+    elif (dist > ship["camZoom"]):
         pilotCam.applyMovement((0,0,-0.05),True)
     
     

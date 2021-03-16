@@ -16,7 +16,8 @@ def updateVal (cont):
     player = cont.sensors["playerCol"]
     hitTerminal = cont.sensors["hitTerminal"]
     
-    
+    if (own["lastTerminal"] == 0):
+        own["lastTerminal"] = own
     
     floor = cont.sensors["floorRay"]
     touchFloor = cont.sensors["touchFloor"]
@@ -38,6 +39,27 @@ def updateVal (cont):
             
     if (own["player_mode"] == "ACTIVE"):
         own["autoBump"] = True
+        own.restoreDynamics()
+        closest = 999999
+        closeObj = own
+        for obj in own.scene.objects:
+            if "terminalTar" in obj:
+                vec = own.getVectTo(obj)
+                #print(vec[0])
+                if (vec[0] < closest):
+                    closest = vec[0]
+                    closeObj = obj
+                    
+                    
+                own["distTo"] = vec[0]
+        terminal = closeObj.parent
+        
+        for object in terminal.children:
+            if "align" in object:
+                #print(terminal.children)
+                
+                object.children[0]["AI_enabled"] = False
+                own["lastTerminal"] = object
         
         for obj in own.scene.objects:
             if "onlyPlayer" in obj:
@@ -66,6 +88,7 @@ def updateVal (cont):
                  #   own["wasdPressed"] = True
             
     elif (own["player_mode"] == "FINDTERMINAL"):
+        own.suspendDynamics(True)
         own["autoBump"] = False
         closest = 999999
         closeObj = own
@@ -76,13 +99,25 @@ def updateVal (cont):
                 if (vec[0] < closest):
                     closest = vec[0]
                     closeObj = obj
+                    
+                    
                 own["distTo"] = vec[0]
+        terminal = closeObj.parent
+        
+        for object in terminal.children:
+            if "align" in object:
+                #print(terminal.children)
+                
+                object.children[0]["AI_enabled"] = True
+                own["lastTerminal"] = object
+        own.worldOrientation = closeObj.worldOrientation
+        own.worldPosition = closeObj.worldPosition        
         #print(closeObj)
-        own.worldOrientation = closeObj.worldOrientation            
-        if ((hitTerminal.positive) == False):       
-            if (closeObj != own):
+                
+       # if ((hitTerminal.positive) == False):       
+          #  if (closeObj != own):
                 #own.alignAxisToVect((own.getVectTo(closeObj)[1]), 1, 0.5)
-                own.worldPosition = closeObj.worldPosition
+                
                 
                 #own.applyMovement((0,0.02*own.getVectTo(closeObj)[0],0),True)           
     else:            

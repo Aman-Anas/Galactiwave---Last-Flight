@@ -10,10 +10,10 @@ def updateAim(cont):
     
     npc = cont.sensors["NPC"]
     
-    if (((npc.positive) and (npc.hitObject["NPC"] == "alive")) and (npc.hitObject["player_mode"] == "FINDTERMINAL")):
-        own["AI_enabled"] = True
-    else:
-        own["AI_enabled"] = False
+    #if (((npc.positive) and (npc.hitObject["NPC"] == "alive")) and (npc.hitObject["player_mode"] == "FINDTERMINAL")):
+       # own["AI_enabled"] = True
+   # else:
+     #   own["AI_enabled"] = False
     
     if (own["active"] == False):
         if (own["AI_enabled"] == True):
