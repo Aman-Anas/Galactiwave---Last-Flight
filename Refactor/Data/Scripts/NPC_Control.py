@@ -145,7 +145,7 @@ def updateVal (cont):
                 
             #if space.positive:
                 
-            
+    own.localLinearVelocity.z += 1       
     jumpTime = 0.2
     jumpForce = 0.7
     jumpIncrement = 0.1
@@ -193,12 +193,13 @@ def updateVal (cont):
     #    own.localLinearVelocity.z = 0
     #print(own["timeTillStop"])
     #print("jumpTimer"+str(own["jumpTimer"]))
-    
+    magRay = cont.sensors["MagRay"]
     if (touchFloor.positive):
         if (floor.positive) and own["follow"] == False:
             own.worldLinearVelocity = floor.hitObject.worldLinearVelocity
+            
             if (own["player_mode"] != "FINDTERMINAL"):
-                own.worldOrientation = floor.hitObject.worldOrientation
+                own.alignAxisToVect(-own.getVectTo(magRay.hitPosition)[1],2,9.0)
                 
             #ownOrient = own.worldOrientation - floor.hitObject.worldOrientation
             #ownPosDif = own.worldPosition - floor.hitObject.worldPosition
@@ -213,8 +214,8 @@ def updateVal (cont):
     if floor.positive == False and own["player_mode"] == "FINDTERMINAL":
         own["player_mode"] = "ACTIVE"    #print(
     
-    if (own["distanceToFloor"] > 3) and own["follow"] == True:
-        own["follow"] = False
+    #if (own["distanceToFloor"] > 3) and own["follow"] == True:
+       # own["follow"] = False
     #if touchFloor.positive:
         #own.worldLinearVelocity = touchFloor.hitObject.worldLinearVelocity 
     #own.localLinearVelocity.x = 0

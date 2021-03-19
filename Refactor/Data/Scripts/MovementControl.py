@@ -139,7 +139,7 @@ def updateVal (cont):
     if own["onFloor"] == True:
         own["jumpTimer"] = jumpTime
     touchFloor = cont.sensors["touchFloor"]      
-    if (space.positive == False) and (touchFloor.positive):
+    if ((space.positive == False) and (touchFloor.positive)) and (floor.positive):
         if (own["onFloor"] == True):
             #own.setParent(floor.hitObject)
             own.worldLinearVelocity = floor.hitObject.worldLinearVelocity

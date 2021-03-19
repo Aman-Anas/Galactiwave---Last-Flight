@@ -14,9 +14,9 @@ def updateLook(cont):
     pilotCam = own.children[0].children[0]
     dist = own.getVectTo(pilotCam)[0]
     if (dist < ship["camZoom"]):
-        pilotCam.applyMovement((0,0,0.05),True)
+        pilotCam.applyMovement((0,0,ship["camZoom"]-dist),True)
     elif (dist > ship["camZoom"]):
-        pilotCam.applyMovement((0,0,-0.05),True)
+        pilotCam.applyMovement((0,0,ship["camZoom"]-dist),True)
     
     
     if (((npc.positive) and (npc.hitObject["NPC"] == "alive")) and (npc.hitObject["player_mode"] == "FINDTERMINAL")):

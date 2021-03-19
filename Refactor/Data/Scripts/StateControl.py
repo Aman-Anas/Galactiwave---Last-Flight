@@ -37,6 +37,9 @@ def updateState (cont):
         own["player_state"] = "FROZEN"
         own["moveActive"] = False
     
+    if (own["player_mode"] != "TERMINAL") and (own["player_mode"] != "FINDTERMINAL"):
+        if own.localLinearVelocity.z < -25:
+            own.localLinearVelocity.z = -25
    # if (own["player_state"] == "FROZEN") and (floor.positive):
        # own.worldLinearVelocity = floor.hitObject.worldLinearVelocity
        # own.worldOrientation = floor.hitObject.worldOrientation

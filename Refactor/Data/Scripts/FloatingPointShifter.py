@@ -25,6 +25,8 @@ def updateLogic(cont):
                     obj.worldPosition.z = diffZ
                     obj.restoreDynamics()
                     #print("justshifted")
+                    sun = own.scene.objects["MainSun"]
+                    sun.updateShadow()
         own.worldPosition.x = playerHit.worldPosition.x
         own.worldPosition.y = playerHit.worldPosition.y
         own.worldPosition.z = playerHit.worldPosition.z
