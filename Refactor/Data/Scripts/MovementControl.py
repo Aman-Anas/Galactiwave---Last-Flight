@@ -167,10 +167,10 @@ def updateVal (cont):
                 #hit = cont.sensors["MagRay"]
                 dist = own.getVectTo(own["currentTerminal"])
                 
-                for obj in own["currentTerminal"].children:
-                    if "terminalTar" in obj:
-                        own.worldOrientation = obj.worldOrientation
-                        own.worldPosition = obj.worldPosition
+        for obj in own["currentTerminal"].children:
+            if "terminalTar" in obj:
+                own.worldOrientation = obj.worldOrientation
+                own.worldPosition = obj.worldPosition
                 #rotDif = Vector(own.worldOrientation.col[1].rotation_difference(dist[1]).to_euler())
                 #own.worldAngularVelocity = floor.hitObject.worldAngularVelocity #* rotDif
                 
