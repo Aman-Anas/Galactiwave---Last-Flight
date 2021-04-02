@@ -143,6 +143,8 @@ def updateVal (cont):
         if (own["onFloor"] == True):
             #own.setParent(floor.hitObject)
             own.worldLinearVelocity = floor.hitObject.worldLinearVelocity
+            #print(own.localOrientation * floor.hitObject.worldOrientation)
+            #own.worldOrientation = own.worldOrientation * floor.hitObject.worldOrientation
             #own.applyForce(own.getVectTo(floor.hitPosition)[1],True)
             #own.worldAngularVelocity = floor.hitPosition.worldAngularVelocity
             
@@ -151,16 +153,17 @@ def updateVal (cont):
             
                 
     
+        
     if own["player_mode"] == "TERMINAL": 
-       
+    
         if "dif" in own: 
             
             #print(own["dif2"])
             #own.localPosition = own["currentTerminal"].localPosition - own["dif2"]
             if floor.positive:
                 #vect = floor.hitObject.getLinearVelocity(False)
-                own.worldOrientation = floor.hitObject.worldOrientation
-                own.worldLinearVelocity = floor.hitObject.worldLinearVelocity
+                #own.worldOrientation = floor.hitObject.worldOrientation
+                #own.worldLinearVelocity = floor.hitObject.worldLinearVelocity
                 #own.localLinearVelocity.y = 0
                 #own.localLinearVelocity.x = 0
                 #own.worldOrientation = floor.hitObject.worldOrientation
@@ -181,6 +184,9 @@ def updateVal (cont):
                 #own.applyMovement(dist[1]*0.1*dist[0],False)
                 
             #print(own["currentTerminal"])           
+        
+   
+   
    # if(own.localLinearVelocity.z > 0.1):
    #     own["timeTillStop"] -= 0.1
     #elif own["onFloor"] == True:

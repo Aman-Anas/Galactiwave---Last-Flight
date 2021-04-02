@@ -74,7 +74,8 @@ def updateAim(cont):
             own["savedAngle"] = own.localOrientation.to_euler()
             #cont.activate(cont.actuators["TrackX"])
         else:
-            
+            #cont.deactivate(cont.actuators["X"])
+            #cont.deactivate(cont.actuators["Y"])
             cont.deactivate(cont.actuators["TrackY"])
             #cont.deactivate(cont.actuators["TrackX"])
     else:
@@ -91,7 +92,7 @@ def updateAim(cont):
         
         cont.activate(cont.actuators["X"])
         
-        if ((deg >= minY) and (deg <= maxY)):
+        if ((deg >= minY) and (deg < maxY)):
             cont.activate(cont.actuators["Y"])
             
         if (deg < minY):
@@ -107,5 +108,6 @@ def updateAim(cont):
             cur = cam.localOrientation.to_euler()
             cur.x = radians(maxY) + radians(89)
             cam.localOrientation = cur
-            #print(cur)
+            
+            ##print(cur)
             #cam.applyRotation((radians(maxY - deg),0,0),True)
