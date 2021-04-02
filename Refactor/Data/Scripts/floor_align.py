@@ -40,4 +40,5 @@ if hitNormal: # check before if the ray hit something
     #print("wow")
     if (own["player_mode"] != "TERMINAL"):
         own.applyForce(-hitNormal*15.8)#gravity to the normal
+        #own.worldLinearVelocity = sen.hitObject.worldLinearVelocity
    

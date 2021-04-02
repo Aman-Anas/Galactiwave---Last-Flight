@@ -11,12 +11,12 @@ def updateVal (cont):
     r = cont.sensors["R"]
     camAct = cont.actuators["SetCam"]
     shift = cont.sensors["Shift"]
-    
+    ########
     if shift.positive:
         own["maxSpeed"] = own["maxRun"]
     else:
         own["maxSpeed"] = own["maxWalk"]
-    
+    #######
     if (w.positive) and (s.positive == False):
         if (own["yDisp"] < own["maxSpeed"]):
             own["yDisp"] += own["increment"]
@@ -25,7 +25,7 @@ def updateVal (cont):
     else:
         if (own["yDisp"] > 0):
             own["yDisp"] = 0
-    
+    ########
     if (s.positive) and (w.positive == False):
         if (own["yDisp"] > -own["maxSpeed"]):
             own["yDisp"] -= own["increment"]
@@ -58,11 +58,12 @@ def updateVal (cont):
     
     if (own["currentTerminal"] == 0):
         own["currentTerminal"] = own
-    if (r.positive) or (own.getVectTo(own["currentTerminal"])[0] > 2):
+    if (r.positive):
         if (own["player_mode"] == "ACTIVE"):
             if (terminalCol.positive):    
                 own["currentTerminal"] = terminalCol.hitObject
                 own["player_mode"] = "TERMINAL"
+                own.setParent(own["currentTerminal"])
                 camAct.camera["active"] = False
                 own.suspendDynamics(True)
                 #The order goes camera is parented to the axis thing is parented to the aligner
@@ -85,6 +86,7 @@ def updateVal (cont):
                 
                     
         elif (own["player_mode"] == "TERMINAL"):
+            own.removeParent()
             own.restoreDynamics()
             #This child is the camera which has the terminal as its parent
             #setting active to false so that it doesn't move around when player is not on it
@@ -138,11 +140,20 @@ def updateVal (cont):
     #print(own["jumpTimer"])
     if own["onFloor"] == True:
         own["jumpTimer"] = jumpTime
+    
+    
+    mag = cont.sensors["MagRay"]
+    
+    
     touchFloor = cont.sensors["touchFloor"]      
-    if ((space.positive == False) and (touchFloor.positive)) and (floor.positive):
+    if ((space.positive == False) and (floor.positive)) and (touchFloor.positive):
         if (own["onFloor"] == True):
             #own.setParent(floor.hitObject)
             own.worldLinearVelocity = floor.hitObject.worldLinearVelocity
+            own["hitObj"] = floor.hitObject
+        #if (mag.positive):
+         #   own.worldLinearVelocity = mag.hitObject.worldLinearVelocity
+            #own.setParent(floor.hitObject)
             #print(own.localOrientation * floor.hitObject.worldOrientation)
             #own.worldOrientation = own.worldOrientation * floor.hitObject.worldOrientation
             #own.applyForce(own.getVectTo(floor.hitPosition)[1],True)

@@ -145,7 +145,7 @@ def updateVal (cont):
                 
             #if space.positive:
                 
-    own.localLinearVelocity.z += 1       
+    #own.localLinearVelocity.z += 1       
     jumpTime = 0.2
     jumpForce = 0.7
     jumpIncrement = 0.1

@@ -18,6 +18,7 @@ def updateAim(cont):
     if (own["active"] == False):
         cont.deactivate(cont.actuators["X"])
         cont.deactivate(cont.actuators["Y"])
+        
         if (own["AI_enabled"] == True):
             #print(own)
             cont.deactivate(cont.actuators["X"])
@@ -77,8 +78,18 @@ def updateAim(cont):
             #cont.deactivate(cont.actuators["X"])
             #cont.deactivate(cont.actuators["Y"])
             cont.deactivate(cont.actuators["TrackY"])
+            orientNow = own.localOrientation.to_euler()
+            orientNow.z = radians(0)
+            #orientNow.y = radians(180)
+            #orientNow.x = radians(0)
+            #orientNow.y = radians(0)
+            own.localOrientation = orientNow
+            #own["angleReset"] = False
+           # own["savedAngle"] = own.localOrientation.to_euler()
             #cont.deactivate(cont.actuators["TrackX"])
+            
     else:
+        
         if (own["angleReset"] == False):
             if ("savedAngle" in own):
                 curOrient = cam.localOrientation.to_euler()
