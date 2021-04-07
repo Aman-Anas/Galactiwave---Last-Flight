@@ -11,8 +11,11 @@ def updateVal (cont):
     
     
     
-    
-    
+    for obj in own.scene.objects:
+        if "onlyPlayer" in obj:
+            onlyPlayer = obj
+            if onlyPlayer["player_mode"] == "TERMINAL":
+                 own["follow"] = False
     player = cont.sensors["playerCol"]
     hitTerminal = cont.sensors["hitTerminal"]
     
@@ -78,18 +81,26 @@ def updateVal (cont):
                 #print(rotDif.x)
                 
                 #own.localAngularVelocity.x = 0
+        
                 #own.localAngularVelocity.z = 0
-        if own["follow"] == True:
+        if (own["follow"] == True):
+            own.removeParent()
+            own.restoreDynamics()
             if ((player.positive) == False):
                 rotDif = Vector(vec[1].rotation_difference(own.worldOrientation.col[1]).to_euler())
                 own.worldAngularVelocity = (own.worldAngularVelocity -rotDif)*0.8
                 own.applyMovement((0,0.01*vec[0],0),True)
                 own["distTo"] = vec[0]
+        else:
+            own.suspendDynamics(True)
+            own.setParent(touchFloor.hitObject)
                 #if (vec[0] > 0.4):
-                 #   own["wasdPressed"] = True
-            
+                     #   own["wasdPressed"] = True
+            #
     elif (own["player_mode"] == "FINDTERMINAL"):
         own.suspendDynamics(True)
+        own.removeParent()
+        own["follow"] = False
         own["autoBump"] = False
         closest = 999999
         closeObj = own

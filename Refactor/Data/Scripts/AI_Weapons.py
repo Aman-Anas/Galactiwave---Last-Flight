@@ -25,14 +25,15 @@ def updateAim(cont):
             cont.deactivate(cont.actuators["Y"])
             #print(maxY)
             #print(minY)
-            
-            deg = degrees(own.localOrientation.to_euler()[0])
+            #maxY = own["minY"]
+            #minY = own["maxY"]
+            deg = -degrees(cam.localOrientation.to_euler()[1])
             #print(deg)
             
             camOrient = cam.localOrientation.to_euler()
             camOrient.x = radians(90)
-            camOrient.y = 0
-            camOrient.z = 0 - own.parent.localOrientation.to_euler().z 
+            camOrient.y = radians(180)
+            camOrient.z = radians(0) - own.parent.localOrientation.to_euler().y 
             cam.localOrientation = camOrient
             own["target_track"] = "none"
             for obj in own.scene.objects:
@@ -44,31 +45,31 @@ def updateAim(cont):
                         #print(own["target_track"])
             
             
-            if ((deg >= minY) and (deg <= maxY)):
-                if (own["target_track"] != "none"):
-                    own.alignAxisToVect((own.getVectTo(own["target_track"])[1]),1,0.14)
+           # if ((deg >= minY) and (deg <= maxY)):
+            if (own["target_track"] != "none"):
+                cam.alignAxisToVect((own.getVectTo(own["target_track"])[1]),1,0.14)
               #  cont.activate(cont.actuators["TrackY"])
                 #cont.deactivate(cont.actuators["TrackY"])
-                currentRot = own.localOrientation.to_euler()
+                currentRot = cam.localOrientation.to_euler()
                 #parentRot = own.parent.localOrientation.to_euler()
                 currentRot.y = radians(0)
                 #print(degrees(parentRot.y))
                 own.localOrientation = currentRot
                 #cam.alignAxisToVect((cam.getVectTo(ting)[1]), 2, 1)
                 
-            if (deg < minY):
+           # if (deg < minY):
              #   cont.deactivate(cont.actuators["TrackY"])
-                curRot = own.localOrientation.to_euler()
-                curRot.x = radians(minY) + radians(0.01)
-                own.localOrientation = curRot
+             #   curRot = cam.localOrientation.to_euler()
+             ##   curRot.x = radians(minY) + radians(0.01)
+             #   cam.localOrientation = curRot
                 #own.applyRotation((radians(minY - deg),0,0),True)
                 #print(minY - deg)
                 
-            if (deg > maxY):
+           # if (deg > maxY):
            #     cont.deactivate(cont.actuators["TrackY"])
-                curRot = own.localOrientation.to_euler()
-                curRot.x = radians(maxY) - radians(0.01)
-                own.localOrientation = curRot
+             #   curRot = cam.localOrientation.to_euler()
+             #   curRot.x = radians(maxY) - radians(0.01)
+             #   cam.localOrientation = curRot
                 #own.applyRotation((radians(maxY - deg),0,0),True)
                 #print(maxY - deg)
             own["angleReset"] = False
@@ -90,8 +91,14 @@ def updateAim(cont):
             
     else:
         
+        
         if (own["angleReset"] == False):
             if ("savedAngle" in own):
+                camOrient = cam.localOrientation.to_euler()
+                camOrient.x = radians(90)
+                camOrient.y = radians(0) 
+                camOrient.z = radians(0) - own.parent.localOrientation.to_euler().y 
+                cam.localOrientation = camOrient
                 curOrient = cam.localOrientation.to_euler()
                 curOrient.x = own["savedAngle"].x + radians(90)
                 cam.localOrientation = curOrient

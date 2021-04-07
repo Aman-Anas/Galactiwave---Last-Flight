@@ -4,7 +4,7 @@ own = cont.owner
 own.scene.suspend()
 #set paths for libload files
 playerController = bge.logic.expandPath("//Models\PlayerController.blend")
-area = bge.logic.expandPath("//Models\Areas\LandscapeArea.blend")
+area = bge.logic.expandPath("//Models\Areas\BetterPlanetArea.blend")
 
 
 #load libload files, 'Scene' is the mode argument for LibLoad (I think)
