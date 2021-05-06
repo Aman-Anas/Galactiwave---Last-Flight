@@ -199,12 +199,14 @@ def updateLook(cont):
     else:
         ship.setAngularVelocity((0,0,0),True)
     if (ship.localLinearVelocity.y < ship["currentSpeed"]):
-        #if ship["currentSpeed"] <= 0:
-         #   ship.localLinearVelocity.y = 0
+        if ship.localLinearVelocity.y < 0:
+            if ship["currentSpeed"] > 0:
+                ship.localLinearVelocity.y = 0
         ship.localLinearVelocity.y += ship["accelSpeed"]*2
     if (ship.localLinearVelocity.y > ship["currentSpeed"]):
-       # if ship["currentSpeed"] >= 0:
-       #     ship.localLinearVelocity.y = 0
+        if ship.localLinearVelocity.y > 0:
+            if ship["currentSpeed"] < 0:
+                ship.localLinearVelocity.y = 0
         ship.localLinearVelocity.y -= ship["accelSpeed"]*2
     #ship.localLinearVelocity.y = ship["currentSpeed"]
     

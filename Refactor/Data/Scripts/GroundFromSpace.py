@@ -20,7 +20,7 @@ def runShader(cont):
 	ownPos = own.worldPosition
 	objpos = obj.position
 	camerapos = (camera.worldPosition - objpos) / radius[0] * obj.worldOrientation
-	lightpos = lamp.getAxisVect([0.0,0.0,1.0])
+	lightpos = lamp.getAxisVect([0.0, 0.0, 1.0])#lightpos = lamp.getAxisVect([0.0,0.0,1.0])
 	lightpos.normalize()
 	lightpos = lightpos * obj.worldOrientation
 	cameraDistance = camerapos.length #/ own.parent.scaling[0]

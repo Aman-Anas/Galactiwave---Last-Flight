@@ -150,6 +150,7 @@ def updateVal (cont):
         if (own["onFloor"] == True):
             #own.setParent(floor.hitObject)
             own.worldLinearVelocity = floor.hitObject.worldLinearVelocity
+            #own.worldAngularVelocity = floor.hitObject.worldAngularVelocity
             own["hitObj"] = floor.hitObject
         #if (mag.positive):
          #   own.worldLinearVelocity = mag.hitObject.worldLinearVelocity
